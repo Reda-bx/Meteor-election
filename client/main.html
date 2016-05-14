@@ -1,0 +1,27 @@
+<head>
+  <title>simple</title>
+</head>
+
+<body>
+  <h1>Welcome to Meaningless voting election!</h1>
+  <h6>Damn daniel</h6>
+  {{> parties}}
+</body>
+
+<template name="parties">
+  <input type="text" id="name" placeholder="name">
+  <button>Click Me</button>
+  <p class="text-danger">{{msgError}}</p>
+  <p class="text-success">{{msgValid}}</p>
+  <div class="container">
+    <div class="row">
+      {{#each parties}}
+      <div class="curs col-md-3">
+        <h4>{{label}}</h4>
+        <img src="{{label}}.png" height="50px" width="50" alt="" />
+        <span>{{count}}</span>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</template>
