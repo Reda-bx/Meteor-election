@@ -6,6 +6,9 @@ import './main.html';
 Voters = new Mongo.Collection("voters");
 Parties = new Mongo.Collection("parties");
 
+Meteor.subscribe("parties");
+Meteor.subscribe("voters");
+
 Template.parties.onCreated(function helloOnCreated() {
   this.msgError = new ReactiveVar("");
   this.msgValid = new ReactiveVar("");
@@ -36,9 +39,8 @@ Template.parties.events({
     if(Session.get('authenticate')){
       var voter_id = Session.get('authenticate');
       if(Voters.findOne(voter_id).isValid === false){
-        Parties.update(this._id,{ $inc : { count : 1}});
-        Voters.update(voter_id, {$set: { isValid: true}});
-        console.log(Session.get('authenticate') +  ' has voted on  '+  this.label);
+        Meteor.call('updatePartiesCount', this._id);
+        Meteor.call('updateVoter', voter_id);
       }else{
         instance.msgError.set("You already Voted faggot !");
         setTimeout(function(){
